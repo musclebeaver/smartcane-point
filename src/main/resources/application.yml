@@ -24,3 +24,17 @@ management:
   endpoint:
     health:
       show-details: when_authorized
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /docs           # 스웨거 UI 접속 경로: http://localhost:8082/docs
+    display-request-duration: true
+    operations-sorter: method
+    tags-sorter: alpha
+    try-it-out-enabled: true
+    doc-expansion: none
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
