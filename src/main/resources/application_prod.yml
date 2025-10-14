@@ -5,13 +5,21 @@ spring:
   application:
     name: point-service
   datasource:
-    url: jdbc:mysql://180.210.78.177:3307/smartcane?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=utf8
-    username: smartcane
+    url: jdbc:mysql://smartcane-point.cl6w2uwm6s0b.ap-southeast-2.rds.amazonaws.com:3306/pointdb?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: admin
     password: Smartcane1!
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      validation-timeout: 5000
+      keepalive-time: 300000
+      idle-timeout: 600000
+      max-lifetime: 180000
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     open-in-view: false
     properties:
       hibernate.format_sql: true
@@ -20,8 +28,8 @@ spring:
     locations: classpath:db/migration
     schemas: smartcane
     default-schema: smartcane
-    baseline-on-migrate: true   # ← 최초 1회만
-    baseline-version: 0
+  # baseline-* 제거 (이미 완료됨)
+
 
 logging:
   level:
