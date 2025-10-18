@@ -5,8 +5,8 @@ spring:
   application:
     name: point-service
   datasource:
-    url: jdbc:mysql://smartcane-point.cl6w2uwm6s0b.ap-southeast-2.rds.amazonaws.com:3306/pointdb?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-    username: admin
+    url: jdbc:mysql://180.210.78.177:3307/smartcane?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=utf8
+    username: smartcane
     password: Smartcane1!
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
@@ -17,11 +17,11 @@ spring:
       hibernate.format_sql: true
   flyway:
     enabled: true
-    default-schema: pointdb
-    schemas: [ pointdb ]
-    locations: classpath:db/migration/point   # 네가 쓰는 경로에 맞추기
-    baseline-on-migrate: true
-    table: flyway_schema_history
+    locations: classpath:db/migration
+    schemas: smartcane
+    default-schema: smartcane
+    baseline-on-migrate: true   # ← 최초 1회만
+    baseline-version: 0
 
 logging:
   level:
