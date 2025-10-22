@@ -4,27 +4,23 @@ server:
 spring:
   application:
     name: point-service
-  datasource:
-    url: jdbc:mysql://smartcane-point.cl6w2uwm6s0b.ap-southeast-2.rds.amazonaws.com:3306/pointdb?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-    username: admin
-    password: Smartcane1!
-    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: none        # Flyway만 사용 (초기엔 update로 임시 생성 가능)
+      ddl-auto: none          # 운영에선 Flyway만 사용
     properties:
       hibernate:
-        # ❗ MySQL에서는 default_schema를 보통 쓰지 않습니다.
-        #   혹시 넣어두셨다면 주석 처리하거나 'pointdb'로 맞추세요.
-        # default_schema: pointdb
-        dialect: org.hibernate.dialect.MySQLDialect  # Hibernate 6 권장
+        dialect: org.hibernate.dialect.MySQLDialect
+        jdbc.time_zone: Asia/Seoul
   flyway:
     enabled: true
-    default-schema: pointdb
-    schemas: [pointdb]
-    locations: classpath:db/migration/point   # 네가 쓰는 경로에 맞추기
+    locations: classpath:db/migration
     baseline-on-migrate: true
-    table: flyway_schema_history
+    # MySQL에선 보통 schemas 지정 불필요 (URL의 DB가 곧 스키마)
+    # schemas: [smartcane_point]
+  security:
+    user:
+      name: admin
+      password: Smartcane1!
 
 logging:
   level:
@@ -34,10 +30,12 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health
   endpoint:
     health:
-      show-details: when_authorized
+      probes:
+        enabled: true
+
 springdoc:
   api-docs:
     enabled: true
