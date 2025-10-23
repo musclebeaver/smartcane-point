@@ -1,5 +1,7 @@
 server:
   port: 8082
+  servlet:
+    context-path: /points   # ✅ 외부의 /points/* 와 일치시킴
 
 spring:
   application:
