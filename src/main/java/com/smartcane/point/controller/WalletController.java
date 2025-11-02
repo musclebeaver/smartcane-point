@@ -47,4 +47,12 @@ public class WalletController {
 
         return walletService.charge(userId, req.amount(), requestId, req.orderId());
     }
+
+    @Operation(summary = "지갑 생성(존재 시 그대로 반환)", description = "idempotent")
+    @PostMapping("/{userId}/wallet")
+    public WalletResponse createIfAbsent(@PathVariable Long userId,
+                                         @RequestHeader(value = "X-Internal-Token", required = false) String internalToken) {
+        // 내부 호출 보호: 내부 토큰/게이트웨이/mTLS 중 택1 (아래 보안 섹션 참고)
+        return walletService.createIfAbsent(userId);
+    }
 }
